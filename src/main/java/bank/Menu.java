@@ -59,10 +59,16 @@ public class Menu {
         case 1:
           System.out.println("Please enter amount to be deposited");
           amount = scanner.nextDouble();
-          account.deposit(amount);
-          System.out.println(amount
-              + " has been deposited to account with id - "
-              + account.getId());
+
+          try {
+            account.deposit(amount);
+
+            System.out.println(amount
+                + " has been deposited to account with id - "
+                + account.getId());
+          } catch (IllegalStateException e) {
+            System.out.println(e.getMessage());
+          }
           break;
 
         case 2:

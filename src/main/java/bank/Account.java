@@ -36,9 +36,15 @@ public class Account {
     this.balance = balance;
   }
 
-  public void deposit(double amount) {
+  public void deposit(double amount) throws IllegalStateException {
     double initial_balance = getBalance();
-    setBalance(initial_balance + amount);
+    
+    if (amount <= 0) {
+      throw new IllegalStateException("Amount should be positive");
+    } else {
+      setBalance(initial_balance + amount);
+    }
+
   }
 
   public void withdraw(double amount) throws IllegalStateException {
