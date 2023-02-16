@@ -1,5 +1,7 @@
 package bank;
 
+import exception.AmountException;
+
 public class Account {
 
   private int id;
@@ -36,24 +38,29 @@ public class Account {
     this.balance = balance;
   }
 
-  public void deposit(double amount) throws IllegalStateException {
+  public void deposit(double amount) throws AmountException {
     double initial_balance = getBalance();
-    
+    double new_balance = initial_balance + amount;
+
     if (amount <= 0) {
-      throw new IllegalStateException("Amount should be positive");
+      throw new AmountException("Amount should be positive");
     } else {
-      setBalance(initial_balance + amount);
+      setBalance(new_balance);
+      DataSource.updateAccountBalance(id, new_balance);
     }
 
   }
 
-  public void withdraw(double amount) throws IllegalStateException {
+  public void withdraw(double amount) throws AmountException {
     double initial_balance = getBalance();
+    double new_balance = 0;
 
     if (amount >= initial_balance) {
-      throw new IllegalStateException("Insufficient Funds");
+      throw new AmountException("Insufficient Funds");
     } else {
-      setBalance(initial_balance - amount);
+      new_balance = initial_balance - amount;
+      setBalance(new_balance);
+      DataSource.updateAccountBalance(id, new_balance);
     }
   }
 

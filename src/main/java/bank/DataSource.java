@@ -27,7 +27,8 @@ public class DataSource {
     String sql = "select * from customers where username = ?";
     Customer customer = null;
 
-    try (Connection connection = connect();
+    try (
+        Connection connection = connect();
         PreparedStatement statement = connection.prepareStatement(sql)) {
       statement.setString(1, username);
       try (ResultSet resultSet = statement.executeQuery()) {
@@ -51,7 +52,8 @@ public class DataSource {
     String sql = "select * from accounts where id = ?";
     Account account = null;
 
-    try (Connection connection = connect();
+    try (
+        Connection connection = connect();
         PreparedStatement statement = connection.prepareStatement(sql)) {
       statement.setInt(1, accountId);
       try (ResultSet resultSet = statement.executeQuery()) {
@@ -69,12 +71,21 @@ public class DataSource {
 
   }
 
-  public static void main(String[] args) {
-    // connect();
-    Customer customer = getCustomer("clillea8@nasa.gov");
-    System.out.println(customer.getName());
+  public static void updateAccountBalance(int accountId, double balance) {
+    String sql = "update accounts set balance = ? where id = ?";
 
-    Account account = getAccount(10385);
-    System.out.println(account.getBalance());
+    try (
+        Connection connection = connect();
+        PreparedStatement statement = connection.prepareStatement(sql)) {
+      statement.setDouble(1, balance);
+      statement.setInt(2, accountId);
+
+      statement.executeUpdate();
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
   }
+
 }

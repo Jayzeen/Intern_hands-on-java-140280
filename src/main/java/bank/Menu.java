@@ -4,6 +4,8 @@ import java.util.Scanner;
 
 import javax.security.auth.login.LoginException;
 
+import exception.AmountException;
+
 public class Menu {
   private Scanner scanner;
 
@@ -66,7 +68,7 @@ public class Menu {
             System.out.println(amount
                 + " has been deposited to account with id - "
                 + account.getId());
-          } catch (IllegalStateException e) {
+          } catch (AmountException e) {
             System.out.println(e.getMessage());
           }
           break;
@@ -81,7 +83,7 @@ public class Menu {
             System.out.println(amount
                 + " has been withdrawn from account with id - "
                 + account.getId());
-          } catch (IllegalStateException e) {
+          } catch (AmountException e) {
             System.out.println(e.getMessage());
           }
           break;
